@@ -9,6 +9,10 @@ app.listen(3000, () => {
     console.log("Server running on port 3000");
 });
 
+app.get('/test', (req, res) => {
+    return res.send('GET HTTP method on user resource');
+});
+
 app.post("/sendNotification", (req, res) => {
     /*var endpoint = "https://fcm.googleapis.com/fcm/send/d8NLt3q2YVw:APA91bE9B4zVmw5kNyBznOzUZhqcPI_XeP4M2pkR0O2FrmoLLoSpVgcBD7LaKwTab9e5QT9tyrjx1H9zYChegQ-w7J_jQpNqhIcnC7IEomchRXOwPsSRK4M-9fkB2SAS4TE8ZMhwrf5L";
     var p256dh = "BE8FTLMvg8l1H4TKbzp2yc0bFiknFzVspLc4mAhJOmOA4N0jy7kYJFkXHlnN86Lcja8jsMxIJOdXOFDlktBodms";
