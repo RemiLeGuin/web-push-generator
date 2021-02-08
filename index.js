@@ -18,10 +18,6 @@ app.listen(PORT, () => {
     console.log("Server running on port 3000");
 });
 
-app.get('/test', (req, res) => {
-    return res.send('GET HTTP method on user resource');
-});
-
 app.post("/sendNotification", (req, res) => {
     var endpoint = req.body.endpoint;
     var p256dh = req.body.p256dh;
