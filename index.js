@@ -1,11 +1,20 @@
+const compression = require('compression');
+const helmet = require('helmet');
 var express = require("express");
 var webPush = require("web-push");
 const bodyParser = require('body-parser');
 var app = express();
+app.use(helmet());
+app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.listen(3000, () => {
+const HOST = process.env.HOST || 'localhost';
+const PORT = process.env.PORT || 3002;
+const DIST_DIR = './dist';
+app.use(express.static(DIST_DIR));
+
+app.listen(PORT, () => {
     console.log("Server running on port 3000");
 });
 
