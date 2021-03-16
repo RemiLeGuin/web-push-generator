@@ -104,5 +104,5 @@ app.post("/sendNotifications", (req, res) => {
         },
     };
     webPush.sendNotification(pushSubscription, payload, options);
-    res.status(201).send(JSON.stringify(globalSubscription) + ' - ' + JSON.stringify(globalPayload));
+    res.status(201).send(JSON.stringify(pushSubscription) + ' - ' + JSON.stringify(payload));
 });
