@@ -62,7 +62,7 @@ app.post("/sendNotifications", (req, res) => {
         TTL: 60,
     };
 
-    webpush.setVapidDetails("mailto:remileguin@live.fr", req.body.vapidPublicKey, req.body.vapidPrivateKey);
+    webPush.setVapidDetails("mailto:remileguin@live.fr", req.body.vapidPublicKey, req.body.vapidPrivateKey);
 
     payloads.forEach((payload) => {
         subscriptions.forEach((subscription) => {
