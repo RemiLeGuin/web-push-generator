@@ -62,7 +62,11 @@ app.post("/sendNotifications", (req, res) => {
         TTL: 60,
     };
 
+    var globalPayload = '';
+    var globalSubscription;
+
     payloads.forEach((payload) => {
+        globalPayload = payload;
         subscriptions.forEach((subscription) => {
             var pushSubscription = {
                 endpoint: subscription.endpoint,
@@ -72,8 +76,10 @@ app.post("/sendNotifications", (req, res) => {
                     auth: subscription.auth,
                 },
             };
-            webPush.sendNotification(pushSubscription, payload, options);
+            globalSubscription = pushSubscription;
+            //webPush.sendNotification(pushSubscription, payload, options);
         });
     });
-    res.status(201).send('Notifications sent');
+    webPush.sendNotification(pushSubscription, payload, options);
+    res.status(201).send(globalSubscription + ' - ' + globalPayload);
 });
