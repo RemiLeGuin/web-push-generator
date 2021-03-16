@@ -72,7 +72,7 @@ app.post("/sendNotifications", (req, res) => {
                     auth: subscription.auth,
                 },
             };
-            webPush.sendNotification(pushSubscription, payload, options);
+            webPush.sendNotification(pushSubscription, JSON.stringify(payload), options);
         });
     });
     res.status(201).send('Notifications sent');
