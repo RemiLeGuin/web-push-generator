@@ -49,7 +49,7 @@ app.post("/sendNotification", (req, res) => {
     webPush.sendNotification(pushSubscription, payload, options);
     res.status(201).send('Notification OK');
 });
-
+/*
 app.post("/sendNotifications", (req, res) => {
     const subscriptions = req.body.subscriptions;
     const payloads = req.body.payloads;
@@ -81,5 +81,28 @@ app.post("/sendNotifications", (req, res) => {
         });
     });
     webPush.sendNotification(globalSubscription, globalPayload, options);
+    res.status(201).send(JSON.stringify(globalSubscription) + ' - ' + JSON.stringify(globalPayload));
+});
+*/
+app.post("/sendNotifications", (req, res) => {
+    const subscription = req.body.subscriptions[0];
+    const payload = req.body.payloads[0];
+    const options = {
+        vapidDetails: {
+            subject: "mailto:remileguin@live.fr",
+            publicKey: req.body.vapidPublicKey,
+            privateKey: req.body.vapidPrivateKey,
+        },
+        TTL: 60,
+    };
+    var pushSubscription = {
+        endpoint: subscription.endpoint,
+        expirationTime: null,
+        keys: {
+            p256dh: subscription.p256dh,
+            auth: subscription.auth,
+        },
+    };
+    webPush.sendNotification(pushSubscription, payload, options);
     res.status(201).send(JSON.stringify(globalSubscription) + ' - ' + JSON.stringify(globalPayload));
 });
