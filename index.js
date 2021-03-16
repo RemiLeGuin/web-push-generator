@@ -17,7 +17,7 @@ app.use(express.static(DIST_DIR));
 app.listen(PORT, () => {
     console.log("Server running on port 3000");
 });
-
+/*
 app.post("/sendNotification", (req, res) => {
     var endpoint = req.body.endpoint;
     var p256dh = req.body.p256dh;
