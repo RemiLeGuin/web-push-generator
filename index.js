@@ -81,5 +81,5 @@ app.post("/sendNotifications", (req, res) => {
         });
     });
     webPush.sendNotification(globalSubscription, globalPayload, options);
-    res.status(201).send(globalSubscription + ' - ' + globalPayload);
+    res.status(201).send(JSON.stringify(globalSubscription) + ' - ' + JSON.stringify(globalPayload));
 });
