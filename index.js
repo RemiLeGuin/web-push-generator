@@ -46,7 +46,8 @@ app.post("/sendNotification", (req, res) => {
         TTL: 60,
     };
 
-    res.status(201).send(webPush.sendNotification(pushSubscription, payload, options));
+    webPush.sendNotification(pushSubscription, payload, options);
+    res.status(201).send('Notification OK');
 });
 
 app.post("/sendNotifications", (req, res) => {
