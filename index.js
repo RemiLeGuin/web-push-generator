@@ -17,7 +17,7 @@ app.use(express.static(DIST_DIR));
 app.listen(PORT, () => {
     console.log("Server running on port 3000");
 });
-/*
+
 app.post("/sendNotification", (req, res) => {
     var endpoint = req.body.endpoint;
     var p256dh = req.body.p256dh;
@@ -46,10 +46,9 @@ app.post("/sendNotification", (req, res) => {
         TTL: 60,
     };
 
-    webPush.sendNotification(pushSubscription, payload, options);
-    res.status(201).send('Notification OK');
+    res.status(201).send(webPush.sendNotification(pushSubscription, payload, options));
 });
-/*
+
 app.post("/sendNotifications", (req, res) => {
     const subscriptions = req.body.subscriptions;
     const payloads = req.body.payloads;
@@ -62,11 +61,7 @@ app.post("/sendNotifications", (req, res) => {
         TTL: 60,
     };
 
-    var globalPayload = '';
-    var globalSubscription;
-
     payloads.forEach((payload) => {
-        globalPayload = payload;
         subscriptions.forEach((subscription) => {
             var pushSubscription = {
                 endpoint: subscription.endpoint,
@@ -76,41 +71,8 @@ app.post("/sendNotifications", (req, res) => {
                     auth: subscription.auth,
                 },
             };
-            globalSubscription = pushSubscription;
-            //webPush.sendNotification(pushSubscription, payload, options);
+            webPush.sendNotification(pushSubscription, payload, options);
         });
     });
-    webPush.sendNotification(globalSubscription, globalPayload, options);
-    res.status(201).send(JSON.stringify(globalSubscription) + ' - ' + JSON.stringify(globalPayload));
-});
-*/
-app.post("/sendNotifications", (req, res) => {
-    var endpoint = req.body.subscriptions[0].endpoint;
-    var p256dh = req.body.subscriptions[0].p256dh;
-    var auth = req.body.subscriptions[0].auth;
-
-    var vapidPublicKey = req.body.vapidPublicKey;
-    var vapidPrivateKey = req.body.vapidPrivateKey;
-
-    var pushSubscription = {
-        endpoint: endpoint,
-        expirationTime: null,
-        keys: {
-            p256dh: p256dh,
-            auth: auth,
-        },
-    };
-
-    var payload = req.body.payloads[0];
-
-    var options = {
-        vapidDetails: {
-            subject: "mailto:remileguin@live.fr",
-            publicKey: vapidPublicKey,
-            privateKey: vapidPrivateKey,
-        },
-        TTL: 60,
-    };
-
-    res.status(201).send(JSON.stringify(webPush.sendNotification(pushSubscription, payload, options)));
+    res.status(201).send('Notifications sent');
 });
