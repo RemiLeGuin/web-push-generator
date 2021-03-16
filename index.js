@@ -65,7 +65,6 @@ app.post("/sendNotifications", (req, res) => {
     webPush.setVapidDetails("mailto:remileguin@live.fr", req.body.vapidPublicKey, req.body.vapidPrivateKey);
 
     payloads.forEach((payload) => {
-        payload = JSON.stringify({ title: 'test', options: { body: 'Coucou' } });
         subscriptions.forEach((subscription) => {
             var pushSubscription = {
                 endpoint: subscription.endpoint,
@@ -75,7 +74,7 @@ app.post("/sendNotifications", (req, res) => {
                     auth: subscription.auth,
                 },
             };
-            webPush.sendNotification(pushSubscription, payload);
+            webPush.sendNotification(pushSubscription, JSON.stringify(payload));
         });
     });
     res.status(201).send('Notifications sent');
